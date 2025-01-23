@@ -4,27 +4,27 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
-{    
-    
+{
+
     private Rigidbody2D playerRigidbody;
     public Vector2 moveVector = Vector2.zero;
 
     [SerializeField]
-    private float moveSpeed = 5.0f;
+    private float moveSpeed = 3.0f;
 
     [SerializeField]
-    private float sprintMultiplier = 1.5f;
+    private float sprintMultiplier = 2f;
 
     private float currentSpeed;
 
     // Start is called before the first frame update
     void Awake()
-    {       
+    {
         Actions.MoveEvent += UpdateMoveVector;
         Actions.SprintEvent += UpdateSprintState;
 
         currentSpeed = moveSpeed;
-    }  
+    }
 
     void Start()
     {
@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     {
         currentSpeed = isSprinting ? moveSpeed * sprintMultiplier : moveSpeed;
     }
- 
+
     void FixedUpdate()
     {
         HandlePlayerMovement();

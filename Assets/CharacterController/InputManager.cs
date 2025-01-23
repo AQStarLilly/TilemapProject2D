@@ -23,12 +23,12 @@ public class InputManager : MonoBehaviour, GameInput.IPlayerActions
             Vector2 movement = context.ReadValue<Vector2>();
             Debug.Log("Movement input : " + movement);
             Actions.MoveEvent?.Invoke(movement);
-        }      
+        }
         else if (context.canceled)
         {
             Debug.Log("Movement stopped.");
             Actions.MoveEvent?.Invoke(Vector2.zero);
-        }       
+        }
     }
 
     public void OnSprint(InputAction.CallbackContext context)
