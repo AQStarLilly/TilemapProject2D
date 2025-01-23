@@ -15,9 +15,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Interact",
+                    "name": "Sprint",
                     "type": "Button",
-                    "id": "4904375a-a21f-46a1-8328-33fe3c0269e7",
+                    "id": "1e8a3cbb-5611-41e4-b384-e21134e4be83",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -82,12 +82,12 @@
                 },
                 {
                     "name": "",
-                    "id": "d6bf073b-6ca8-4113-8629-82e7d016a752",
-                    "path": "<Keyboard>/space",
+                    "id": "d681092a-bfb0-4db0-8f28-f35b273da448",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

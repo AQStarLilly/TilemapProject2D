@@ -10,12 +10,20 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 moveVector = Vector2.zero;
 
     [SerializeField]
-    private float moveSpeed = 2.0f;
+    private float moveSpeed = 5.0f;
+
+    [SerializeField]
+    private float sprintMultiplier = 1.5f;
+
+    private float currentSpeed;
 
     // Start is called before the first frame update
     void Awake()
     {       
         Actions.MoveEvent += UpdateMoveVector;
+        Actions.SprintEvent += UpdateSprintState;
+
+        currentSpeed = moveSpeed;
     }  
 
     void Start()
@@ -27,6 +35,11 @@ public class PlayerMovement : MonoBehaviour
     {
         moveVector = InputVector;
     }
+
+    private void UpdateSprintState(bool isSprinting)
+    {
+        currentSpeed = isSprinting ? moveSpeed * sprintMultiplier : moveSpeed;
+    }
  
     void FixedUpdate()
     {
@@ -35,11 +48,12 @@ public class PlayerMovement : MonoBehaviour
 
     void HandlePlayerMovement()
     {
-        playerRigidbody.MovePosition(playerRigidbody.position + moveVector * moveSpeed * Time.fixedDeltaTime);
+        playerRigidbody.MovePosition(playerRigidbody.position + moveVector * currentSpeed * Time.fixedDeltaTime);
     }
 
     void OnDisable()
     {
         Actions.MoveEvent -= UpdateMoveVector;
+        Actions.SprintEvent -= UpdateSprintState;
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour, GameInput.IPlayerActions
 {
-
     private GameInput gameInput;
 
     void Awake()
@@ -17,13 +16,13 @@ public class InputManager : MonoBehaviour, GameInput.IPlayerActions
         gameInput.Player.SetCallbacks(this);
     }
 
-
     public void OnMove(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.performed)
         {
-            Debug.Log("Movement started : " + context.ReadValue<Vector2>());
-            Actions.MoveEvent?.Invoke(context.ReadValue<Vector2>());
+            Vector2 movement = context.ReadValue<Vector2>();
+            Debug.Log("Movement input : " + movement);
+            Actions.MoveEvent?.Invoke(movement);
         }      
         else if (context.canceled)
         {
@@ -32,24 +31,42 @@ public class InputManager : MonoBehaviour, GameInput.IPlayerActions
         }       
     }
 
-    public void OnInteract(InputAction.CallbackContext context)
+    public void OnSprint(InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (context.performed)
         {
-            Debug.Log("Interaction started.");
-            Actions.InteractionEvent?.Invoke(true);
+            Actions.SprintEvent?.Invoke(true);
+            Debug.Log("Started sprinting.");
         }
         else if (context.canceled)
         {
-            Debug.Log("Interaction stopped.");
-            Actions.InteractionEvent?. Invoke(false); 
+            Actions.SprintEvent?.Invoke(false);
+            Debug.Log("Stopped sprinting.");
         }
     }
+
+    // Clean up on disable or destroy
+    void OnDisable()
+    {
+        if (gameInput != null)
+        {
+            gameInput.Player.Disable(); // Disable the Player action map
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (gameInput != null)
+        {
+            gameInput.Player.Disable(); // Extra safety for cleanup
+        }
+    }
+
 }
 
 
 public static class Actions
 {
     public static Action<Vector2> MoveEvent;
-    public static Action<bool> InteractionEvent;
+    public static Action<bool> SprintEvent;
 }
